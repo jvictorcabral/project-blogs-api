@@ -3,6 +3,7 @@ const app = require('./api');
 const loginController = require('./controllers/loginController');
 const userController = require('./controllers/userController');
 const validateLogin = require('./middlewares/validateLogin');
+const validateToken = require('./middlewares/validateToken');
 const validateUser = require('./middlewares/validateUser');
 
 // não remova a variável `API_PORT` ou o `listen`
@@ -15,5 +16,6 @@ app.get('/', (_request, response) => {
 
 app.post('/login', validateLogin, loginController.login);
 app.post('/user', validateUser, userController.createUser);
+app.get('/user', validateToken, userController.listUser);
 
 app.listen(port, () => console.log('ouvindo porta', port));

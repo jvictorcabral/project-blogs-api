@@ -23,6 +23,18 @@ const createUser = async (req, res) => {
   }
 };
 
+const listUser = async (_req, res) => {
+  // consegui remover a senha olhando na documentacao do Sequelize
+  // https://sequelize.org/docs/v6/core-concepts/model-querying-basics/
+
+  const users = await User.findAll({
+    attributes: { exclude: ['password'] },
+  });
+
+  return res.status(200).json(users);
+};
+
 module.exports = {
   createUser,
+  listUser,
 };
