@@ -21,5 +21,6 @@ app.post('/user', validateUser, userController.createUser);
 app.get('/user', validateToken, userController.listAllUsers);
 app.get('/user/:id', validateToken, userController.listUser);
 app.post('/categories', validateCategory, validateToken, categoryController.createCategory);
+app.get('/categories', validateToken, categoryController.listAllCategories);
 
 app.listen(port, () => console.log('ouvindo porta', port));
