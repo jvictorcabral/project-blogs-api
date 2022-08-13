@@ -9,6 +9,8 @@ const validateLogin = require('./middlewares/validateLogin');
 const validatePost = require('./middlewares/validatePost');
 const validateToken = require('./middlewares/validateToken');
 const validateUser = require('./middlewares/validateUser');
+const validateUpdatePost = require('./middlewares/validateUpdatePost');
+const verifyUser = require('./middlewares/verifyUser');
 
 // não remova a variável `API_PORT` ou o `listen`
 const port = process.env.API_PORT || 3000;
@@ -27,5 +29,7 @@ app.get('/categories', validateToken, categoryController.listAllCategories);
 app.post('/post', validatePost, validateToken, postController.create);
 app.get('/post', validateToken, postController.getAll);
 app.get('/post/:id', validateToken, postController.getById);
+app.put('/post/:id', validateToken, verifyUser, validateUpdatePost, postController.updatePost);
+app.delete('/post/:id', validateToken, postController.deletePost);
 
 app.listen(port, () => console.log('ouvindo porta', port));
