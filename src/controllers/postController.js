@@ -1,4 +1,4 @@
-const { BlogPost, Category, User/* , PostCategory */ } = require('../database/models');
+const { BlogPost, Category, User, PostCategory } = require('../database/models');
 
 const create = async (req, res) => {
   const { /*  title, content, */categoryIds } = req.body;
@@ -66,18 +66,12 @@ const updatePost = async (req, res) => {
 const deletePost = async (req, res) => {
   const { id } = req.params;
 
-  const post = await BlogPost.findByPk(id);
-  
-  if (!post) {
-    return res.status(404).json({ message: 'Post does not exist' });
-  }
-
-  // await PostCategory.destroy(
-  //   { where: { postId: id } },
-  // );
-  // await BlogPost.destroy(
-  //   { where: { id } },
-  // );
+  await PostCategory.destroy(
+    { where: { postId: id } },
+  );
+  await BlogPost.destroy(
+    { where: { id } },
+  );
 
   return res.status(204);
 };

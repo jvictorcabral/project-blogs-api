@@ -48,8 +48,20 @@ const listUser = async (req, res) => {
   return res.status(200).json(user);
 };
 
+const deleteUser = async (req, res) => {
+  const auth = req.headers.authorization;
+  const decoded = jwt.verify(auth, SECRET);
+  const getEmail = decoded.email;
+  await User.destroy({
+    where: { email: getEmail },
+  });
+
+  res.status(204);
+};
+
 module.exports = {
   createUser,
   listAllUsers,
   listUser,
+  deleteUser,
 };
