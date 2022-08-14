@@ -52,11 +52,18 @@ const deleteUser = async (req, res) => {
   const auth = req.headers.authorization;
   const decoded = jwt.verify(auth, SECRET);
   const getEmail = decoded.email;
-  await User.destroy({
+  
+  const getUser = await User.findOne({
     where: { email: getEmail },
   });
+  
+  const test = await User.destroy({
+    where: { id: getUser.id },
+  });
 
-  res.status(204);
+  console.log(test);
+
+  res.status(204).end();
 };
 
 module.exports = {
