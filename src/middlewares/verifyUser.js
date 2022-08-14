@@ -9,7 +9,6 @@ const verifyUser = async (req, res, next) => {
     const auth = req.headers.authorization;
     const { id: userId } = req.params;
     const decoded = jwt.verify(auth, SECRET);
-    // const getEmail = decoded.email;
 
     const getUser = await User.findOne({
       where: { email: decoded.email },
@@ -18,9 +17,6 @@ const verifyUser = async (req, res, next) => {
     const getUserId = await BlogPost.findOne({
       where: { id: userId },
     });
-    console.log(decoded.email);
-    console.log(getUser);
-    console.log(getUserId);
 
     if (getUser.id !== getUserId.userId) {
       throw (errorMessage);
