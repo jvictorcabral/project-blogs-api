@@ -57,11 +57,9 @@ const deleteUser = async (req, res) => {
     where: { email: getEmail },
   });
   
-  const test = await User.destroy({
+  await User.destroy({
     where: { id: getUser.id },
   });
-
-  console.log(test);
 
   res.status(204).end();
 };

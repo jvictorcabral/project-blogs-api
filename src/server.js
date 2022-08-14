@@ -31,7 +31,7 @@ app.post('/post', validatePost, validateToken, postController.create);
 app.get('/post', validateToken, postController.getAll);
 app.get('/post/:id', validateToken, postController.getById);
 app.put('/post/:id', validateToken, verifyUser, validateUpdatePost, postController.updatePost);
-app.delete('/post/:id', validateToken, validateNonexistentPost,
+app.delete('/post/:id', validateNonexistentPost, validateToken,
 verifyUser, postController.deletePost);
 app.delete('/user/me', validateToken, userController.deleteUser);
 

@@ -73,7 +73,7 @@ const deletePost = async (req, res) => {
     { where: { id } },
   );
 
-  return res.status(204);
+  return res.status(204).end();
 };
 
 module.exports = {
