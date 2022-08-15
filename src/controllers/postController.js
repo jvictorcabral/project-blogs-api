@@ -1,7 +1,11 @@
+const jwt = require('jsonwebtoken');
 const { BlogPost, Category, User, PostCategory } = require('../database/models');
 
+const SECRET = process.env.JWT_SECRET;
+
 const create = async (req, res) => {
-  const { /*  title, content, */categoryIds } = req.body;
+  const auth = req.headers.authorization;
+  const { title, content, categoryIds } = req.body;
 
   const findId = categoryIds.map((id) => Category.findByPk(id));
 
@@ -11,9 +15,19 @@ const create = async (req, res) => {
     return res.status(400).json({ message: '"categoryIds" not found' });
   }
 
-  // const post = await BlogPost.create(title, content);
+  const decoded = jwt.verify(auth, SECRET);
+  const email = { email: decoded.email };
 
-  // return res.status(201).json(post);
+  const getUser = await User.findOne(email);
+
+  const post = await BlogPost.create({ title, content, userId: getUser.id });
+
+  const { dataValues } = post;
+
+        await Promise.all(categoryIds
+        .map((categoryId) => PostCategory.create({ postId: dataValues.id, categoryId })));
+
+  return res.status(201).json(dataValues);
 };
 
 const getAll = async (_req, res) => {
