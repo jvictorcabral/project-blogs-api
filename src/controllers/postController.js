@@ -18,7 +18,10 @@ const create = async (req, res) => {
   const decoded = jwt.verify(auth, SECRET);
   const email = { email: decoded.email };
 
-  const getUser = await User.findOne(email);
+  const getUser = await User.findOne({
+    where: email,
+  });
+  console.log('getUser do controller: ', getUser);
 
   const post = await BlogPost.create({ title, content, userId: getUser.id });
 

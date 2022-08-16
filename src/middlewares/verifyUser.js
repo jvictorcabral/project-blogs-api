@@ -7,18 +7,17 @@ const errorMessage = { message: 'Unauthorized user' };
 const verifyUser = async (req, res, next) => {
   try {
     const auth = req.headers.authorization;
-    const { id: userId } = req.params;
+    const { id } = req.params;
     const decoded = jwt.verify(auth, SECRET);
+    console.log('decoded: ', decoded);
 
     const getUser = await User.findOne({
       where: { email: decoded.email },
     });
 
-    const getUserId = await BlogPost.findOne({
-      where: { id: userId },
-    });
+    const getPost = await BlogPost.findByPk(id);
 
-    if (getUser.id !== getUserId.userId) {
+    if (getUser.id !== getPost.userId) {
       throw (errorMessage);
     }
   } catch (err) {
