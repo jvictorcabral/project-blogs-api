@@ -1,4 +1,4 @@
-# Boas-vindas ao repositório do projeto API de Blogs!
+<!-- # Boas-vindas ao repositório do projeto API de Blogs!
 
 Para realizar o projeto, atente-se a cada passo descrito a seguir, e se tiver qualquer dúvida, nos envie por _Slack_! #vqv 🚀
 
@@ -1363,4 +1363,4 @@ Ao iniciar este projeto você concorda com as diretrizes do Código de Conduta e
       []
     ```
 
-</details>
+</details> -->
